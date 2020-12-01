@@ -2,7 +2,11 @@
 
 const options = ['R', 'P', 'S']
 const winningCombos = ['RS', 'PR', 'SP']
-
+const images = {
+    R: "imgs/rock.png"
+    P: "imgs/paper.png"
+    S: "imgs/scissors.png"
+}
 /* ------ apps state (variables) for state ------- */
 
 let scores = {
@@ -18,8 +22,7 @@ ties.player
 let playerChoice;
 let compChoice;
 
-
-// cached element references
+//  CACHED ELEMENT REFERENCES
 let playerScore = document.getElementById('player-score')
 let tiesScore = document.getElementById('ties-score')
 let compScore = document.getElementById('computer-score')
@@ -53,6 +56,8 @@ function init() {
 function playGame() {
     choices.classList.remove('hidden')
     playButton.classList.add('hidden')
+    playerImage.classList.remove('hidden')
+    computerImage.classList.remove('hidden')
 }
 
 function choiceSelect(event) {
@@ -61,10 +66,6 @@ function choiceSelect(event) {
     checkWinner()
     render()
 }
-    // handle comp choice
-    //declare winner
-    //give out points
-    //play button resumes unhidden
     render()
 }
 
@@ -79,8 +80,21 @@ function checkWinner () {
     // Player Wins
     } else if (winningCombos.includes(playerChoice + compChoice)) {
         scores.player++
+        playerImage.classList.add('winner')
     // Computer Wins
     } else {
         scores.comp++
+        computerImage.classList.add('winner')
     }
+}
+
+function render () {
+    playerImage.src = images[playerChoice]
+    computerImage.src = images[compChoice]
+
+    playerScore.textContent = scores.player
+    tiesScore.textContent = scores.ties
+    compScore.textContent = scores.comp
+    choices.classList.add('hidden')
+    playButton.classList.remove('hidden')
 }
